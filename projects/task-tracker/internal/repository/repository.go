@@ -7,4 +7,6 @@ import (
 type Repository interface {
 	AddTask(task *model.Task) error
 	GetTaskByDescription(description string) *model.Task
+	GetTaskByID(id int) (*model.Task, error)
+	DeleteTask(task *model.Task) error
 }

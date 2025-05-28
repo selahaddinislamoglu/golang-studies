@@ -86,3 +86,22 @@ func (r *FileRepository) GetTaskByDescription(description string) *model.Task {
 	}
 	return nil
 }
+
+func (r *FileRepository) GetTaskByID(id int) (*model.Task, error) {
+	for _, task := range *r.tasks {
+		if task.ID == id {
+			return &task, nil
+		}
+	}
+	return nil, fmt.Errorf("task with ID %d not found", id)
+}
+
+func (r *FileRepository) DeleteTask(task *model.Task) error {
+	for i, t := range *r.tasks {
+		if t.ID == task.ID {
+			*r.tasks = append((*r.tasks)[:i], (*r.tasks)[i+1:]...)
+			return r.writeTasks()
+		}
+	}
+	return fmt.Errorf("task with ID %d not found", task.ID)
+}

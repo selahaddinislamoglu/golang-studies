@@ -16,5 +16,6 @@ var rootCmd = &cobra.Command{
 
 func NewRootCmd(handler handler.Handler) *cobra.Command {
 	rootCmd.AddCommand(NewAddCmd(handler))
+	rootCmd.AddCommand(NewDeleteCmd(handler))
 	return rootCmd
 }

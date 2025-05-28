@@ -14,6 +14,7 @@ type TaskService struct {
 }
 
 var ErrTaskAlreadyExists = errors.New("task already exists")
+var ErrTaskNotFound = errors.New("task not found")
 
 func NewTaskService(repository repository.Repository) Service {
 	return &TaskService{
@@ -41,4 +42,17 @@ func (s *TaskService) AddTask(description string) (*model.Task, error) {
 		return nil, err
 	}
 	return task, nil
+}
+
+// DeleteTaskByID deletes a task by its ID.
+func (s *TaskService) DeleteTaskByID(id int) error {
+	task, err := s.repository.GetTaskByID(id)
+	if err != nil {
+		return err
+	}
+	if task == nil {
+		return ErrTaskNotFound
+	}
+
+	return s.repository.DeleteTask(task)
 }

@@ -6,4 +6,5 @@ import (
 
 type Service interface {
 	AddTask(description string) (*model.Task, error)
+	DeleteTaskByID(id int) error
 }
