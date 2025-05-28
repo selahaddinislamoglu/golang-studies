@@ -68,6 +68,10 @@ func (s *TaskService) UpdateTaskDescription(id int, description string) error {
 }
 
 func (s *TaskService) UpdateTaskStatus(id int, status string) error {
+
+	if status != "todo" && status != "in-progress" && status != "done" {
+		return errors.New("invalid status: must be 'todo', 'in-progress', or 'done'")
+	}
 	existingTask, err := s.repository.GetTaskByID(id)
 	if err != nil {
 		return err

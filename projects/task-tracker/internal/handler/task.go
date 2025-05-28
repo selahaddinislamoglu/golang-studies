@@ -65,7 +65,7 @@ func (h *TaskHandler) UpdateTaskDescription(id, description string) error {
 	return h.service.UpdateTaskDescription(idInt, description)
 }
 
-func (h *TaskHandler) UpdateTaskStatus(id, status string) error {
+func (h *TaskHandler) updateTaskStatus(id, status string) error {
 	if id == "" {
 		return ErrEmptyID
 	}
@@ -80,4 +80,14 @@ func (h *TaskHandler) UpdateTaskStatus(id, status string) error {
 	}
 
 	return h.service.UpdateTaskStatus(idInt, status)
+}
+
+func (h *TaskHandler) UpdateTaskStatusInProgress(id string) error {
+	return h.updateTaskStatus(id, "in-progress")
+}
+func (h *TaskHandler) UpdateTaskStatusDone(id string) error {
+	return h.updateTaskStatus(id, "done")
+}
+func (h *TaskHandler) UpdateTaskStatusTodo(id string) error {
+	return h.updateTaskStatus(id, "todo")
 }
