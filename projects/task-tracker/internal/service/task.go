@@ -14,6 +14,7 @@ type TaskService struct {
 
 var ErrTaskAlreadyExists = errors.New("task already exists")
 var ErrTaskNotFound = errors.New("task not found")
+var ErrNoTasksFound = errors.New("no tasks found")
 
 func NewTaskService(repository repository.Repository) Service {
 	return &TaskService{
@@ -81,4 +82,38 @@ func (s *TaskService) UpdateTaskStatus(id int, status string) error {
 	}
 	existingTask.Status = status
 	return s.repository.UpdateTask(existingTask)
+}
+
+func (s *TaskService) ListTasks() ([]*model.Task, error) {
+	tasks, err := s.repository.GetAllTasks()
+	if err != nil {
+		return nil, err
+	}
+	if tasks == nil {
+		return nil, ErrNoTasksFound
+	}
+	return tasks, nil
+}
+
+func (s *TaskService) ListTasksByStatus(status string) ([]*model.Task, error) {
+	if status != "todo" && status != "in-progress" && status != "done" {
+		return nil, errors.New("invalid status: must be 'todo', 'in-progress', or 'done'")
+	}
+	tasks, err := s.repository.GetAllTasks()
+	if err != nil {
+		return nil, err
+	}
+	if tasks == nil {
+		return nil, ErrNoTasksFound
+	}
+	var filteredTasks []*model.Task
+	for _, task := range tasks {
+		if task.Status == status {
+			filteredTasks = append(filteredTasks, task)
+		}
+	}
+	if len(filteredTasks) == 0 {
+		return nil, ErrNoTasksFound
+	}
+	return filteredTasks, nil
 }

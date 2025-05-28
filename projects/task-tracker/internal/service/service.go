@@ -9,4 +9,6 @@ type Service interface {
 	DeleteTaskByID(id int) error
 	UpdateTaskDescription(id int, description string) error
 	UpdateTaskStatus(id int, status string) error
+	ListTasks() ([]*model.Task, error)
+	ListTasksByStatus(status string) ([]*model.Task, error)
 }

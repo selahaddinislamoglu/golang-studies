@@ -7,4 +7,6 @@ type Handler interface {
 	UpdateTaskStatusInProgress(id string) error
 	UpdateTaskStatusDone(id string) error
 	UpdateTaskStatusTodo(id string) error
+	ListTasks() ([][]byte, error)
+	ListTasksByStatus(status string) ([][]byte, error)
 }

@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
 	"strconv"
@@ -85,9 +86,50 @@ func (h *TaskHandler) updateTaskStatus(id, status string) error {
 func (h *TaskHandler) UpdateTaskStatusInProgress(id string) error {
 	return h.updateTaskStatus(id, "in-progress")
 }
+
 func (h *TaskHandler) UpdateTaskStatusDone(id string) error {
 	return h.updateTaskStatus(id, "done")
 }
+
 func (h *TaskHandler) UpdateTaskStatusTodo(id string) error {
 	return h.updateTaskStatus(id, "todo")
+}
+
+func (h *TaskHandler) ListTasks() ([][]byte, error) {
+	tasks, err := h.service.ListTasks()
+	if err != nil {
+		return nil, fmt.Errorf("failed to list tasks: %w", err)
+	}
+
+	var result [][]byte
+	for _, task := range tasks {
+		data, err := json.MarshalIndent(task, "", "  ")
+		if err != nil {
+			return nil, fmt.Errorf("failed to marshal task: %w", err)
+		}
+		result = append(result, data)
+	}
+	return result, nil
+}
+
+func (h *TaskHandler) ListTasksByStatus(status string) ([][]byte, error) {
+
+	if status == "" {
+		return nil, fmt.Errorf("status cannot be empty")
+	}
+
+	tasks, err := h.service.ListTasksByStatus(status)
+	if err != nil {
+		return nil, fmt.Errorf("failed to list tasks by status: %w", err)
+	}
+
+	var result [][]byte
+	for _, task := range tasks {
+		data, err := json.MarshalIndent(task, "", "  ")
+		if err != nil {
+			return nil, fmt.Errorf("failed to marshal task: %w", err)
+		}
+		result = append(result, data)
+	}
+	return result, nil
 }

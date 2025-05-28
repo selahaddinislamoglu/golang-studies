@@ -21,5 +21,6 @@ func NewRootCmd(handler handler.Handler) *cobra.Command {
 	rootCmd.AddCommand(NewUpdateStatusInProgressCmd(handler))
 	rootCmd.AddCommand(NewUpdateStatusDoneCmd(handler))
 	rootCmd.AddCommand(NewUpdateStatusToDoCmd(handler))
+	rootCmd.AddCommand(NewListCmd(handler))
 	return rootCmd
 }
