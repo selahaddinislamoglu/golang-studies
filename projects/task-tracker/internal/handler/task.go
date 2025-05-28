@@ -47,3 +47,37 @@ func (h *TaskHandler) DeleteTask(id string) error {
 
 	return h.service.DeleteTaskByID(idInt)
 }
+
+func (h *TaskHandler) UpdateTaskDescription(id, description string) error {
+	if id == "" {
+		return ErrEmptyID
+	}
+
+	if description == "" {
+		return ErrEmptyDescription
+	}
+
+	idInt, err := strconv.Atoi(id)
+	if err != nil {
+		return fmt.Errorf("failed to convert id to integer: %w", err)
+	}
+
+	return h.service.UpdateTaskDescription(idInt, description)
+}
+
+func (h *TaskHandler) UpdateTaskStatus(id, status string) error {
+	if id == "" {
+		return ErrEmptyID
+	}
+
+	if status == "" {
+		return fmt.Errorf("status cannot be empty")
+	}
+
+	idInt, err := strconv.Atoi(id)
+	if err != nil {
+		return fmt.Errorf("failed to convert id to integer: %w", err)
+	}
+
+	return h.service.UpdateTaskStatus(idInt, status)
+}

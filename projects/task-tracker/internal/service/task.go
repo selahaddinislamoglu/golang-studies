@@ -2,7 +2,6 @@ package service
 
 import (
 	"errors"
-	"time"
 
 	"github.com/selahaddinislamoglu/golang-studies/projects/task-tracker/internal/model"
 	"github.com/selahaddinislamoglu/golang-studies/projects/task-tracker/internal/repository"
@@ -33,8 +32,6 @@ func (s *TaskService) AddTask(description string) (*model.Task, error) {
 	task = &model.Task{
 		Description: description,
 		Status:      "todo",
-		CreatedAt:   time.Now().Format(time.RFC3339),
-		UpdatedAt:   time.Now().Format(time.RFC3339),
 	}
 
 	err := s.repository.AddTask(task)
@@ -55,4 +52,29 @@ func (s *TaskService) DeleteTaskByID(id int) error {
 	}
 
 	return s.repository.DeleteTask(task)
+}
+
+func (s *TaskService) UpdateTaskDescription(id int, description string) error {
+
+	existingTask, err := s.repository.GetTaskByID(id)
+	if err != nil {
+		return err
+	}
+	if existingTask == nil {
+		return ErrTaskNotFound
+	}
+	existingTask.Description = description
+	return s.repository.UpdateTask(existingTask)
+}
+
+func (s *TaskService) UpdateTaskStatus(id int, status string) error {
+	existingTask, err := s.repository.GetTaskByID(id)
+	if err != nil {
+		return err
+	}
+	if existingTask == nil {
+		return ErrTaskNotFound
+	}
+	existingTask.Status = status
+	return s.repository.UpdateTask(existingTask)
 }

@@ -9,4 +9,5 @@ type Repository interface {
 	GetTaskByDescription(description string) *model.Task
 	GetTaskByID(id int) (*model.Task, error)
 	DeleteTask(task *model.Task) error
+	UpdateTask(task *model.Task) error
 }

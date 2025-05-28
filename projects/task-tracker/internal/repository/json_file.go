@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
+	"time"
 
 	"github.com/selahaddinislamoglu/golang-studies/projects/task-tracker/internal/model"
 )
@@ -68,6 +69,8 @@ func (r *FileRepository) AddTask(task *model.Task) error {
 		id = (*r.tasks)[len(*r.tasks)-1].ID + 1
 	}
 	task.ID = id
+	task.CreatedAt = time.Now().Format(time.RFC3339)
+	task.UpdatedAt = time.Now().Format(time.RFC3339)
 
 	*r.tasks = append(*r.tasks, *task)
 
@@ -100,6 +103,17 @@ func (r *FileRepository) DeleteTask(task *model.Task) error {
 	for i, t := range *r.tasks {
 		if t.ID == task.ID {
 			*r.tasks = append((*r.tasks)[:i], (*r.tasks)[i+1:]...)
+			return r.writeTasks()
+		}
+	}
+	return fmt.Errorf("task with ID %d not found", task.ID)
+}
+
+func (r *FileRepository) UpdateTask(task *model.Task) error {
+	for i, t := range *r.tasks {
+		if t.ID == task.ID {
+			task.UpdatedAt = time.Now().Format(time.RFC3339)
+			(*r.tasks)[i] = *task
 			return r.writeTasks()
 		}
 	}
