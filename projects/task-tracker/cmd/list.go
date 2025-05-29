@@ -9,7 +9,7 @@ import (
 
 func NewListCmd(handler handler.Handler) *cobra.Command {
 	return &cobra.Command{
-		Use:   "list [options]",
+		Use:   "list [status]",
 		Short: "List all tasks",
 		Long:  `List all tasks in the task list.`,
 		Args:  cobra.RangeArgs(0, 1),
