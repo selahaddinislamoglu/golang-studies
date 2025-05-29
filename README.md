@@ -4,6 +4,6 @@ I follow [roadmap.sh/golang](https://roadmap.sh/golang) and [roadmap.sh/backend]
 
 ## Projects
 
-- [Task Tracker](https://github.com/selahaddinislamoglu/golang-studies/tree/main/projects/task-tracker)
+- [Task Tracker](https://github.com/selahaddinislamoglu/golang-studies/tree/main/projects/task-tracker) : Solution for the [task-tracker](https://roadmap.sh/projects/task-tracker) challenge.
 
 
