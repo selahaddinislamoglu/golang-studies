@@ -16,5 +16,7 @@ func main() {
 	service := service.NewTaskService(repository)
 	handler := handler.NewTaskHandler(service)
 	cmd := cmd.NewRootCmd(handler)
-	cmd.Execute()
+	if err := cmd.Execute(); err != nil {
+		panic(err)
+	}
 }

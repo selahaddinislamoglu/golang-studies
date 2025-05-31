@@ -1,8 +1,6 @@
 package cmd
 
 import (
-	"fmt"
-
 	"github.com/selahaddinislamoglu/golang-studies/projects/task-tracker/internal/handler"
 	"github.com/spf13/cobra"
 )
@@ -35,12 +33,12 @@ func NewListCmd(handler handler.Handler) *cobra.Command {
 				return
 			}
 			if len(tasks) == 0 {
-				fmt.Println("No tasks found.")
+				cmd.Println("No tasks found.")
 				return
 			}
 
 			for _, task := range tasks {
-				fmt.Println(string(task))
+				cmd.Println(string(task))
 			}
 		},
 	}

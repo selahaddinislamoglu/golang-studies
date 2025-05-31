@@ -1,10 +1,10 @@
 package cmd
 
 import (
-	"fmt"
+	"os"
+
 	"github.com/selahaddinislamoglu/golang-studies/projects/task-tracker/internal/handler"
 	"github.com/spf13/cobra"
-	"os"
 )
 
 func NewAddCmd(handler handler.Handler) *cobra.Command {
@@ -16,18 +16,18 @@ func NewAddCmd(handler handler.Handler) *cobra.Command {
 		Run: func(cmd *cobra.Command, args []string) {
 
 			if len(args) < 1 {
-				fmt.Println("Please provide a task description.")
+				cmd.Println("Please provide a task description.")
 				os.Exit(1)
 			}
 
 			description := args[0]
 			id, err := handler.AddTask(description)
 			if err != nil {
-				fmt.Printf("Error adding task: %v\n", err)
+				cmd.Printf("Error adding task: %v\n", err)
 				os.Exit(1)
 			}
 
-			fmt.Printf("Task added successfully. ID:%d\n", id)
+			cmd.Printf("Task added successfully. ID:%d\n", id)
 		},
 	}
 }
