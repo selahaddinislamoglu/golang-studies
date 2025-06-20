@@ -8,14 +8,8 @@ type CLIWriter struct {
 func NewCLIWriter() Writer {
 	return &CLIWriter{}
 }
-func (w *CLIWriter) WriteInt(value int) {
-	_, err := fmt.Printf("%d\n", value)
-	if err != nil {
-		panic(err)
-	}
-}
-func (w *CLIWriter) WriteString(value string) {
-	_, err := fmt.Printf("%s\n", value)
+func (w *CLIWriter) Write(value string) {
+	_, err := fmt.Printf("\033[1;32m%s\033[0m\n\n", value)
 	if err != nil {
 		panic(err)
 	}

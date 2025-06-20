@@ -27,10 +27,10 @@ func (h *GameHandler) Run() error {
 		if err := h.game.Play(); err != nil {
 			return err
 		}
-		h.writer.WriteString("Play again? (Y/N)> ")
+		h.writer.Write("Play again? (Y/N)> ")
 		input := h.reader.ReadString()
 		if input != "Y" && input != "y" {
-			h.writer.WriteString("Thanks for playing!")
+			h.writer.Write("Thanks for playing!")
 			break
 		}
 	}

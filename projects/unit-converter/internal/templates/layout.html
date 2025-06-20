@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>{{.Title}}</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+    {{template "header" .}}
+    {{if eq .Content "home"}}
+    {{template "home" .}}
+    {{else if eq .Content "convert"}}
+    {{template "convert" .}}
+    {{else if eq .Content "result"}}
+    {{template "result" .}}
+    {{end}}
+    {{template "navbar" .}}
+    {{template "footer" .}}
+</body>
+
+</html>
+
+{{define "header"}}
+<h1>{{.Title}}</h1>
+{{end}}
+
+
+{{define "navbar"}}
+<nav>
+    <h2>Navigation</h2>
+    <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/length">Length Converter</a></li>
+        <li><a href="/weight">Weight Converter</a></li>
+        <li><a href="/temperature">Temperature Converter</a></li>
+    </ul>
+</nav>
+{{end}}
+
+{{define "footer"}}
+<footer>
+    <p>&copy; 2025 Unit Converter</p>
+</footer>
+{{end}}
+
+{{define "home"}}
+<h2>Welcome to the Unit Converter</h2>
+<p>Select a conversion type from the navigation menu to get started.</p>
+{{end}}
+
+{{define "convert"}}
+<form action="/{{.Unit}}" method="post">
+    <label for="value">Enter the {{.Unit}} to convert:</label>
+    <input type="number" id="value" name="value" required>
+    <label for="from">From:</label>
+    <select id="from" name="from">
+        {{range .Units}}
+        <option value="{{.}}">{{.}}</option>
+        {{end}}
+    </select>
+    <label for="to">To:</label>
+    <select id="to" name="to">
+        {{range .Units}}
+        <option value="{{.}}">{{.}}</option>
+        {{end}}
+    </select>
+    <button type="submit">Convert</button>
+</form>
+{{end}}
+
+{{define "result"}}
+<h2>Conversion Result</h2>
+<p>{{.Value}} {{.From}} is equal to {{.ConvertedValue}} {{.To}}</p>
+<a href="/{{.Unit}}">Convert another {{.Unit}}</a>
+{{end}}
