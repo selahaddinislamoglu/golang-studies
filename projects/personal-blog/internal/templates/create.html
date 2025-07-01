@@ -1,0 +1,15 @@
+{{template "header.html" .}}
+<main>
+    <form method="POST" action="/admin/create">
+        <label for="title">Title:</label>
+        <br>
+        <input type="text" id="title" name="title" required>
+        <br>
+        <label for="content">Content:</label>
+        <br>
+        <textarea id="content" name="content" required></textarea>
+        <br>
+        <button type="submit">Create Article</button>
+    </form>
+</main>
+{{template "footer.html" .}}

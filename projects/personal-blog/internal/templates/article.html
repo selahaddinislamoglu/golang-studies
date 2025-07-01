@@ -1,0 +1,8 @@
+{{template "header.html" .}}
+<main>
+    <article>
+        <p>Published at <time>{{.UpdatedAt}}</time></p>
+        <p>{{.Content}}</p>
+    </article>
+</main>
+{{template "footer.html" .}}

@@ -1,0 +1,23 @@
+{{template "header.html" .}}
+<main>
+    <h3><a href="/admin/create">Create New Article</a></h3>
+    {{range .Articles}}
+    <h3 style="display:inline;">
+        <a href="/article/{{.ID}}">{{.Title}}</a>
+        <form action="/admin/edit/{{.ID}}" method="GET" style="display:inline;">
+            <button type="submit"
+                style="background:none;border:none;color:blue;text-decoration:underline;cursor:pointer;">
+                Edit
+            </button>
+        </form>
+        <form action=" /admin/delete/{{.ID}}" method="POST" style="display:inline;">
+            <button type="submit"
+                style="background:none;border:none;color:blue;text-decoration:underline;cursor:pointer;">
+                Delete
+            </button>
+        </form>
+    </h3>
+    <br>
+    {{end}}
+</main>
+{{template "footer.html" .}}

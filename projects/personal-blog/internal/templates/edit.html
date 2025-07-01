@@ -1,0 +1,17 @@
+{{template "header.html" .}}
+<main>
+    <form method="POST" action="/admin/edit/{{.Article.ID}}">
+        <label for="title">Title:</label>
+        <br>
+        <input type="text" id="title" name="title" value="{{.Article.Title}}" required>
+        <br>
+        <label for="content">Content:</label>
+        <br>
+        <textarea id="content" name="content" required>{{.Article.Content}}</textarea>
+        <br>
+        <input type="hidden" name="id" value="{{.Article.ID}}">
+        <br>
+        <button type="submit">Edit Article</button>
+    </form>
+</main>
+{{template "footer.html" .}}

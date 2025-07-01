@@ -1,0 +1,9 @@
+{{template "header.html" .}}
+<main>
+    {{range .Articles}}
+    <article>
+        <h3><a href="/article/{{.ID}}">{{.Title}}</a> - <time>{{.UpdatedAt}}</time></h3>
+    </article>
+    {{end}}
+</main>
+{{template "footer.html" .}}
